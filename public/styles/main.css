@@ -1,0 +1,28 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;700;900&display=swap');
+
+body{
+    background-color: #2d3047;
+    font-family: 'Rubik', sans-serif;
+    font-weight: 300;
+    color: #191102;
+}
+
+/* login and register styles */
+#brand-image{
+    position: relative;
+    left: -5px;
+}
+#enter-card{
+    width: 430px;
+    border-radius: 15px;
+}
+#enter-card h2{
+    font-weight: 300;
+    font-size: 24px;
+    color: #4F5269;
+    margin: 10px 0 40px 0;
+}
+/* navbar styles */
+#top-menu{
+    background-color: #2d3047;
+}

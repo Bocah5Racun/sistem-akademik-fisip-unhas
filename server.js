@@ -7,19 +7,24 @@ const app = express()
 const expressLayouts = require('express-ejs-layouts')
 
 const indexRouter = require('./routes/index')
+const usersRouter = require('./routes/users')
 
+// prepare view engine and layouts
 app.set('view engine', 'ejs')
 app.set('views', __dirname + '/views')
 app.set('layout', 'layouts/layout')
 app.use(expressLayouts)
 app.use(express.static('public'))
 
+// connect to MongoDB
 const mongoose = require('mongoose')
 mongoose.connect(process.env.DATABASE_URI, { useNewUrlParser: true, useUnifiedTopology: true })
 const db = mongoose.connection
 db.on('error', error => console.error(error))
 db.once('open', () => console.log('Connected to Mongoose'))
 
+// set routers
 app.use('/', indexRouter)
+app.use('/user', usersRouter)
 
 app.listen(process.env.PORT || 3000)
