@@ -1,0 +1,68 @@
+<div class="d-flex p-4 min-vh-100 justify-content-center align-items-center">
+    <div id="card-wrapper" class="text-center">
+        <div id="brand-image" class="p-3">
+            <a href="/"><img src="../images/logo-fisip.png" style="width: 260px"></a>
+        </div>
+        <div id="enter-card" class="container p-0 bg-white">
+            <form method="POST" action="/login" class="p-4">
+                <h2>Daftar User Baru</h2>
+                <div class="input-group form-group">
+                    <div class="input-group-prepend">
+                    <div class="input-group-text" style="background-color: #fff"><img src="../images/user-img.png" style="height: 20px"></div>
+                    </div>
+                    <input type="text" class="form-control" name="nama" placeholder="Nama Lengkap">
+                </div>
+                <div class="input-group form-group">
+                    <div class="input-group-prepend">
+                    <div class="input-group-text" style="background-color: #fff">NIM</div>
+                    </div>
+                    <input type="text" class="form-control" name="nim" placeholder="Nomor Induk Mahasiswa">
+                </div>
+                <div class="input-group form-group">
+                    <div class="input-group-prepend">
+                    <div class="input-group-text" style="background-color: #fff; width: 46px">@</div>
+                    </div>
+                    <input type="email" class="form-control" name="email" placeholder="Email">
+                </div>
+                <div class="input-group form-group">
+                    <div class="input-group-prepend">
+                    <div class="input-group-text" style="background-color: #fff"><img src="../images/lock-img.png" style="height: 20px"></div>
+                    </div>
+                    <input type="password" id="password" class="form-control" name="password" placeholder="Password">
+                </div>
+                <div class="input-group form-group">
+                    <div class="input-group-prepend">
+                    <div class="input-group-text" style="background-color: #fff; width: 46px"></div>
+                    </div>
+                    <input type="password" id="confirmedPassword" class="form-control" name="confirmedPassword" placeholder="Ulangi password Anda">
+                </div>
+                <div id="errorMessage" class="alert alert-danger d-none">
+                </div>
+                <div class="form-group">
+                    <button id="submitForm" class="btn btn-lg btn-primary w-100" type="submit" disabled>Daftar</button>
+                </div>
+            </form>
+            <div class="card-header border-top p-3">
+                Sudah punya akun? <a href="/login">Login di sini.</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    $('#confirmedPassword').on('keyup', (e) => {
+        var password = $('#password').val()
+        if(e.target.value !== password){
+            $('#confirmedPassword, #password').addClass('is-invalid')
+            $('#submitForm').attr('disabled', 'disabled')
+            $('#errorMessage').html('Error: Password tidak sama!')
+            $('#errorMessage').removeClass('d-none')
+        } else{
+            $('#confirmedPassword, #password').removeClass('is-invalid').addClass('is-valid')
+            $('#submitForm').removeAttr('disabled')
+            $('#errorMessage').addClass('d-none')
+        }
+    })
+
+</script>
