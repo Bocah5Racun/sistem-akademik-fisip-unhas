@@ -3,8 +3,12 @@
 body{
     background-color: #2d3047;
     font-family: 'Rubik', sans-serif;
+    font-size: 14px;
     font-weight: 300;
-    color: #191102;
+    color: #2D3047;
+}
+.light-text{
+    color: rgb(128, 193, 255);
 }
 
 /* login and register styles */
@@ -21,6 +25,9 @@ body{
     font-size: 24px;
     color: #4F5269;
     margin: 10px 0 40px 0;
+}
+#errorBox{
+    display: none;
 }
 /* navbar styles */
 #top-menu{

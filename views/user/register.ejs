@@ -4,42 +4,79 @@
             <a href="/"><img src="../images/logo-fisip.png" style="width: 260px"></a>
         </div>
         <div id="enter-card" class="container p-0 bg-white">
-            <form method="POST" action="/login" class="p-4">
+            <form method="POST" action="/user/register" class="p-4">
                 <h2>Daftar User Baru</h2>
+                <%- include("../partials/errorMessage") %>
                 <div class="input-group form-group">
                     <div class="input-group-prepend">
                     <div class="input-group-text" style="background-color: #fff"><img src="../images/user-img.png" style="height: 20px"></div>
                     </div>
-                    <input type="text" class="form-control" name="nama" placeholder="Nama Lengkap">
+                    <input type="text" class="form-control" name="nama" placeholder="Nama Lengkap" value="<%= typeof nama != 'undefined' ? nama: '' %>" required>
                 </div>
                 <div class="input-group form-group">
                     <div class="input-group-prepend">
-                    <div class="input-group-text" style="background-color: #fff">NIM</div>
+                        <div class="input-group-text" style="background-color: #fff; width: 46px; font-size: 0.8em">NIM</div>
                     </div>
-                    <input type="text" class="form-control" name="nim" placeholder="Nomor Induk Mahasiswa">
+                    <input type="text" class="form-control" name="nim" placeholder="Nomor Induk Mahasiswa" value="<%= typeof nim != 'undefined' ? nim: '' %>"  required>
                 </div>
                 <div class="input-group form-group">
                     <div class="input-group-prepend">
-                    <div class="input-group-text" style="background-color: #fff; width: 46px">@</div>
+                        <div class="input-group-text" style="background-color: #fff"><img src="../images/email-img.png" style="width: 20px"></div>
                     </div>
-                    <input type="email" class="form-control" name="email" placeholder="Email">
+                    <input type="email" class="form-control" name="email" placeholder="Email" value="<%= typeof email != 'undefined' ? email: '' %>"  required>
+                </div>
+                <div class="input-group form-group">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text" style="background-color: #fff"><img src="../images/telefon-img.png" style="width: 20px"></div>
+                    </div>
+                    <input type="text" class="form-control" name="telefon" placeholder="Nomor Telefon" value="<%= typeof telefon != 'undefined' ? telefon: '' %>"  required>
                 </div>
                 <div class="input-group form-group">
                     <div class="input-group-prepend">
                     <div class="input-group-text" style="background-color: #fff"><img src="../images/lock-img.png" style="height: 20px"></div>
                     </div>
-                    <input type="password" id="password" class="form-control" name="password" placeholder="Password">
+                    <input type="password" id="password" class="form-control" name="password" placeholder="Password" required>
                 </div>
+                <p class="text-right"><small class="text-muted">Password minimal 8 karakter.</small></p>
                 <div class="input-group form-group">
                     <div class="input-group-prepend">
                     <div class="input-group-text" style="background-color: #fff; width: 46px"></div>
                     </div>
-                    <input type="password" id="confirmedPassword" class="form-control" name="confirmedPassword" placeholder="Ulangi password Anda">
+                    <input type="password" id="confirmedPassword" class="form-control" name="confirmedPassword" placeholder="Ulangi password Anda" required>
                 </div>
-                <div id="errorMessage" class="alert alert-danger d-none">
+                <p class="text-right"><small class="text-muted">Ketik ulang password Anda.</small></p>
+                <hr class="my-4">
+                <div class="form-group text-left">
+                    <label for="prodi">Program Studi</label>
+                    <select name="prodi" id="prodi" class="form-control">
+                        <option value="Antropologi">Antropologi</option>
+                        <option value="Hubungan Internasional">Hubungan Internasional</option>
+                        <option value="Ilmu Administrasi">Ilmu Administrasi</option>
+                        <option value="Ilmu Komunikasi">Ilmu Komunikasi</option>
+                        <option value="Ilmu Pemerintahan">Ilmu Pemerintahan</option>
+                        <option value="Ilmu Politik">Ilmu Politik</option>
+                        <option value="Sosiologi">Sosiologi</option>
+                    </select>   
                 </div>
+                <div class="form-group text-left">
+                    <label for="jenjang">Jenjang Studi</label>
+                    <select name="jenjang" id="jenjang" class="form-control">
+                        <option value="s1">Sarjana</option>
+                        <option value="s2">Magister</option>
+                        <option value="s3">Doktor</option>
+                    </select>   
+                </div>
+                <hr class="my-4">
                 <div class="form-group">
-                    <button id="submitForm" class="btn btn-lg btn-primary w-100" type="submit" disabled>Daftar</button>
+                    <div class="container text-left">
+                        <p>Dengan ini saya menyatakan bahwa data yang diupload dalam form online ini adalah benar. Jika tidak benar, maka saya bersedia menerima sanksi yang diberikan oleh Akademik FISIP Unhas.</p>
+                        <p>Jika anda setuju dengan pernyataan tersebut, silahkan centang kata setuju di bawah ini.</p>
+                    </div>
+                    <div class="form-check pt-2 pb-4">
+                        <input type="checkbox" class="form-check-input" id="exampleCheck1" required>
+                        <label class="form-check-label" for="exampleCheck1">Saya setuju</label>
+                      </div>
+                    <button id="submitForm" class="btn btn-lg btn-primary w-100" type="submit">Daftar</button>
                 </div>
             </form>
             <div class="card-header border-top p-3">
@@ -50,19 +87,26 @@
 </div>
 
 <script>
-
-    $('#confirmedPassword').on('keyup', (e) => {
-        var password = $('#password').val()
-        if(e.target.value !== password){
-            $('#confirmedPassword, #password').addClass('is-invalid')
-            $('#submitForm').attr('disabled', 'disabled')
-            $('#errorMessage').html('Error: Password tidak sama!')
-            $('#errorMessage').removeClass('d-none')
+    $("#password").on("keyup", () =>{
+        if($("#password").val().length < 8){
+            $("#password").removeClass("is-valid")
+            $("#password").addClass("is-invalid")
         } else{
-            $('#confirmedPassword, #password').removeClass('is-invalid').addClass('is-valid')
-            $('#submitForm').removeAttr('disabled')
-            $('#errorMessage').addClass('d-none')
+            $("#password").removeClass("is-invalid")
+            $("#password").addClass("is-valid")
         }
     })
 
+    $("#confirmedPassword").on("keyup", () => {
+        var password = $("#password").val()
+        var confirmedPassword = $("#confirmedPassword").val()
+
+        if(password !== confirmedPassword){
+            $("#confirmedPassword").removeClass("is-valid")
+            $("#confirmedPassword").addClass("is-invalid")
+        } else{
+            $("#confirmedPassword").removeClass("is-invalid")
+            $("#confirmedPassword").addClass("is-valid")
+        }
+    })
 </script>

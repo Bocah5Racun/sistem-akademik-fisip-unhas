@@ -11,7 +11,8 @@ router.get('/login', (req, res) => {
     res.render('login', { title: 'Dashboard Akademik FISIP / Login User', hideNavbar: true})
 })
 
-router.post('/login', async (req, res) =>{
+router.post('/login', async (req, res) => {
     res.send("Works!")
 })
+
 module.exports = router
